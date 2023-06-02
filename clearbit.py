@@ -41,6 +41,10 @@ class ClearBitSession:
 
     def get_top_company(self, query: str):
         companies = self.get_companies(query)
+
+        if len(companies) == 0:
+            raise RuntimeError(f'No companies found for query: {query}')
+
         top_company = companies[0]
 
         company_details = self.get_company_details(top_company['domain'])

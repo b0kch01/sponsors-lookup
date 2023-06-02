@@ -13,7 +13,7 @@ existing_contacts = pd.read_csv('contacts.csv')
 
 cbs = clearbit.ClearBitSession(session_id='83ee5038418c5ed535ff0e5e5f7704b8e9561f9f86dd8563391aa220d341c0f1')
 
-company = cbs.get_top_company('apple')
+company = cbs.get_top_company('metacareers')
 people = cbs.get_people(company, clearbit.Role.RECRUITING)
 people += cbs.get_people(company, clearbit.Role.ENGINEERING)
 
@@ -30,7 +30,7 @@ for person in people:
         person["favorable_ranking"] += 100
 
     # recruiters
-    if fuzzy_in(person['title'], ['recruiter', 'recruiting', 'talent']):
+    if fuzzy_in(person['title'], ['recruiter', 'recruiting', 'talent', 'sourcing', 'sourcer']):
         person["favorable_ranking"] += 50
 
     # points for being technical
@@ -56,7 +56,7 @@ people.sort(key=lambda x: x['favorable_ranking'], reverse=True)
 # create a df
 df = pd.DataFrame(people)
 df = df[["name", "title", "favorable_ranking"]]
-print(df.head(5).to_markdown())
+print(df.head(10).to_markdown())
 
 print()
 print("Company Details")

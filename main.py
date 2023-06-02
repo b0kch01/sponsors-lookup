@@ -13,7 +13,7 @@ existing_contacts = pd.read_csv('contacts.csv')
 
 cbs = clearbit.ClearBitSession(session_id='83ee5038418c5ed535ff0e5e5f7704b8e9561f9f86dd8563391aa220d341c0f1')
 
-company = cbs.get_top_company('metacareers')
+company = cbs.get_top_company('twilio.com')
 people = cbs.get_people(company, clearbit.Role.RECRUITING)
 people += cbs.get_people(company, clearbit.Role.ENGINEERING)
 
@@ -37,6 +37,10 @@ for person in people:
     if fuzzy_in(person['title'], ['technical']):
         person["quality_score"] += 20
 
+    # subtract points for being global or international
+    if fuzzy_in(person['title'], ['global', 'international', 'worldwide']):
+        person["quality_score"] -= 10
+
     # subtract points for diversity and inclusion
     if fuzzy_in(person['title'], ['diversity', 'inclusion', "de&i", "dei", "d&i"]):
         person["quality_score"] -= 20
@@ -56,7 +60,7 @@ people.sort(key=lambda x: x['quality_score'], reverse=True)
 # create a df
 df = pd.DataFrame(people)
 df = df[["name", "title", "quality_score"]]
-print(df.head(10).to_markdown())
+print(df.head(5).to_markdown())
 
 print()
 print("Company Details")

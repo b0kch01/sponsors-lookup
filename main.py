@@ -19,43 +19,43 @@ people += cbs.get_people(company, clearbit.Role.ENGINEERING)
 
 # points system
 for person in people:
-    person["favorable_ranking"] = 1000
+    person["quality_score"] = 1000
 
     # technical evangelists or advocates
     if fuzzy_in(person['title'], ['evangelist', 'advocate']):
-        person["favorable_ranking"] += 500
+        person["quality_score"] += 500
 
     # campus or university recruiters
     if fuzzy_in(person['title'], ['campus', 'university']):
-        person["favorable_ranking"] += 100
+        person["quality_score"] += 100
 
     # recruiters
     if fuzzy_in(person['title'], ['recruiter', 'recruiting', 'talent', 'sourcing', 'sourcer']):
-        person["favorable_ranking"] += 50
+        person["quality_score"] += 50
 
     # points for being technical
     if fuzzy_in(person['title'], ['technical']):
-        person["favorable_ranking"] += 20
+        person["quality_score"] += 20
 
     # subtract points for diversity and inclusion
     if fuzzy_in(person['title'], ['diversity', 'inclusion', "de&i", "dei", "d&i"]):
-        person["favorable_ranking"] -= 20
+        person["quality_score"] -= 20
 
     # subtract points for very high level titles
     if fuzzy_in(person['title'], ['senior', 'vp', 'director', 'head', 'lead', 'executive', 'chief', 'principal']):
-        person["favorable_ranking"] -= 10
+        person["quality_score"] -= 10
 
     # subtract points for very lower, but still senior titles
     if fuzzy_in(person['title'], ['manager', 'associate', 'assistant', 'coordinator', 'specialist']):
-        person["favorable_ranking"] -= 5
+        person["quality_score"] -= 5
 
 
-people.sort(key=lambda x: x['favorable_ranking'], reverse=True)
+people.sort(key=lambda x: x['quality_score'], reverse=True)
 
 # print out the top 10
 # create a df
 df = pd.DataFrame(people)
-df = df[["name", "title", "favorable_ranking"]]
+df = df[["name", "title", "quality_score"]]
 print(df.head(10).to_markdown())
 
 print()

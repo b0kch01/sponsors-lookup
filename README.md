@@ -1,15 +1,21 @@
 <div align=center>
 
 <img src="readme/investigate.gif" width=75 height=75>
+  
+`
+me looking for campus recruiters
+`
 
-```
-Quickly compile a list of sponsors for your university hackathon!
-```
 # Sponsors Lookup
+  
+  ```
+🔎 Quickly compile a list of sponsor contacts for your university hackathon!
+```
 
 
 </div>
 
+## Progress
 
 - [ ] Store results and allow for easy copy-n-paste
 - [ ] Reverse engineer email lookup feature
@@ -17,6 +23,6 @@ Quickly compile a list of sponsors for your university hackathon!
 - [x] Employee selection algorithm
 - [x] Company selection algorithm
 
-## Other Tools for Organizers
+## Related Tools for Organizers
 > 🚩 Flags GitHub projects with low commit numbers and unprofessional code.
 > https://github.com/b0kch01/JudgeJudy

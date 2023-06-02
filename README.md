@@ -18,4 +18,5 @@ Quickly compile a list of sponsors for your university hackathon!
 - [x] Company selection algorithm
 
 ## Other Tools for Organizers
-🚩 Flags GitHub projects with low commit numbers and unprofessional code. - https://github.com/b0kch01/JudgeJudy
+> 🚩 Flags GitHub projects with low commit numbers and unprofessional code.
+> https://github.com/b0kch01/JudgeJudy

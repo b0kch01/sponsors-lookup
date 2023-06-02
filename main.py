@@ -13,7 +13,7 @@ existing_contacts = pd.read_csv('contacts.csv')
 
 cbs = clearbit.ClearBitSession(session_id='83ee5038418c5ed535ff0e5e5f7704b8e9561f9f86dd8563391aa220d341c0f1')
 
-company = cbs.get_top_company('Cockroach Labs')
+company = cbs.get_top_company('apple')
 people = cbs.get_people(company, clearbit.Role.RECRUITING)
 people += cbs.get_people(company, clearbit.Role.ENGINEERING)
 
@@ -55,8 +55,16 @@ people.sort(key=lambda x: x['favorable_ranking'], reverse=True)
 # print out the top 10
 # create a df
 df = pd.DataFrame(people)
-print(df.head(5))
+df = df[["name", "title", "favorable_ranking"]]
+print(df.head(5).to_markdown())
 
+print()
+print("Company Details")
+print("---------------")
+print(f"Name: {company.name}")
+print(f"Domain: {company.domain}")
+print(f"Employees: {company.size}")
+print(f"Type: {'Big Tech' if company.size > 10000 else 'Tech'}")
 
 # campus_recruiters = []
 # campus_di_recruiters = []

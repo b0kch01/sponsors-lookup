@@ -19,16 +19,35 @@ class Role:
 class Company:
     name: str
     domain: str
+    size: int = None
 
 
 class ClearBitSession:
     def __init__(self, session_id: str):
         self.session_id = session_id
 
+    def get_company_details(self, domain: str):
+        # Example: https://connect.clearbit.com/v1/companies/find?domain=kohls.com
+        url = _API_BASE / 'companies' / 'find'
+        params = {'domain': domain}
+
+        headers = {
+            "cookie": f'rack.sessionv2={self.session_id}'
+        }
+
+        res = requests.get(url, params=params, headers=headers)
+        res.raise_for_status()
+        return res.json()
+
     def get_top_company(self, query: str):
         companies = self.get_companies(query)
         top_company = companies[0]
-        return Company(name=top_company['name'], domain=top_company['domain'])
+
+        company_details = self.get_company_details(top_company['domain'])
+
+        return Company(name=company_details['name'],
+                       domain=company_details['domain'],
+                       size=company_details['metrics']['employees'])
 
     def get_companies(self, query: str):
         # Example: https://autocomplete.clearbit.com/v1/companies/suggest?query=google

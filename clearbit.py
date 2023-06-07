@@ -84,3 +84,14 @@ class ClearBitSession:
             person['name'] = full_name
 
         return people
+
+    def get_person_info(self, id: str):
+        url = _API_BASE / 'people' / id / 'retrieve'
+        headers = {
+            "cookie": f'rack.sessionv2={self.session_id}'
+        }
+
+        res = requests.get(url, headers=headers)
+        res.raise_for_status()
+
+        return res.json()

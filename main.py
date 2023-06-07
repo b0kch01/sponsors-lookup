@@ -1,4 +1,5 @@
 import clearbit
+import clipboard
 import pandas as pd
 
 
@@ -56,6 +57,11 @@ for person in people:
 
 people.sort(key=lambda x: x['quality_score'], reverse=True)
 
+if len(people) > 1:
+    print("Top result email: ", end="")
+    print(cbs.get_person_info(people[0]['id'])['email'])
+    print()
+
 # print out the top 10
 # create a df
 df = pd.DataFrame(people)
@@ -69,6 +75,18 @@ print(f"Name: {company.name}")
 print(f"Domain: {company.domain}")
 print(f"Employees: {company.size}")
 print(f"Type: {'Big Tech' if company.size > 10000 else 'Tech'}")
+
+# Asana	Tech	Casey	Goodman	caseygoodman@asana.com		Not Contacted Yet		Recruiting
+# Twilio  Tech    Lizzie Siegle   lsiegle@twilio.com              Not Contacted Yet               Developer Evangelist Lll
+clipboard.copy(
+    f"{company.name}\t"
+    f"Tech\t{people[0]['first_name']}\t{people[0]['last_name']}\t"
+    f"{cbs.get_person_info(people[0]['id'])['email']}\t\t"
+    f"Not Contacted Yet\t\t{people[0]['title']}"
+)
+
+print("Success! Copied to clipboard.")
+
 
 # campus_recruiters = []
 # campus_di_recruiters = []

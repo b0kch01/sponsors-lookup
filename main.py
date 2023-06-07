@@ -67,5 +67,5 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except (RuntimeError, sponsor_finder.SponsorFinderException) as e:
+    except (sponsor_finder.SponsorFinderException, AssertionError) as e:
         cprint(f"Error: {e}", "red")

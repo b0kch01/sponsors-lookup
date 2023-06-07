@@ -39,7 +39,7 @@ class ClearBitSession:
         try:
             res.raise_for_status()
         except requests.exceptions.HTTPError:
-            raise RuntimeError(f'No company found for domain: {domain}')
+            raise AssertionError(f'No company found for domain: {domain}')
 
         return res.json()
 
@@ -47,7 +47,7 @@ class ClearBitSession:
         companies = self.get_companies(query)
 
         if len(companies) == 0:
-            raise RuntimeError(f'No companies found for query: {query}')
+            raise AssertionError(f'No companies found for query: {query}')
 
         top_company = companies[0]
 

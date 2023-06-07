@@ -46,8 +46,10 @@ me looking for campus recruiters
 ## Progress
 
 - [ ] Store results and allow for easy copy-n-paste
-- [ ] Reverse engineer email lookup feature
-  - [ ] Implement into API
+  - [X] Single row copy
+  - [ ] Multi row copy with input_file
+- [X] Reverse engineer email lookup feature
+  - [X] Implement into API
 - [x] Employee selection algorithm
 - [x] Company selection algorithm
 

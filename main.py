@@ -1,132 +1,71 @@
-import clearbit
-import clipboard
-import pandas as pd
+import sponsor_finder
+import os
+from termcolor import cprint
 
 
-def fuzzy_in(haystack, needles):
-    for needle in needles:
-        if needle.lower() in haystack.lower():
-            return True
-    return False
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
-existing_contacts = pd.read_csv('contacts.csv')
+def main():
+    clear()
 
-cbs = clearbit.ClearBitSession(session_id='83ee5038418c5ed535ff0e5e5f7704b8e9561f9f86dd8563391aa220d341c0f1')
+    TITLE = """
+.▄▄ ·  ▄▄▄·       ▐ ▄ .▄▄ ·       ▄▄▄      ·▄▄▄▪   ▐ ▄ ·▄▄▄▄  ▄▄▄ .▄▄▄  
+▐█ ▀. ▐█ ▄█▪     •█▌▐█▐█ ▀. ▪     ▀▄ █·    ▐▄▄·██ •█▌▐███▪ ██ ▀▄.▀·▀▄ █·
+▄▀▀▀█▄ ██▀· ▄█▀▄ ▐█▐▐▌▄▀▀▀█▄ ▄█▀▄ ▐▀▀▄     ██▪ ▐█·▐█▐▐▌▐█· ▐█▌▐▀▀▪▄▐▀▀▄ 
+▐█▄▪▐█▐█▪·•▐█▌.▐▌██▐█▌▐█▄▪▐█▐█▌.▐▌▐█•█▌    ██▌.▐█▌██▐█▌██. ██ ▐█▄▄▌▐█•█▌
+ ▀▀▀▀ .▀    ▀█▄▀▪▀▀ █▪ ▀▀▀▀  ▀█▄▀▪.▀  ▀    ▀▀▀ ▀▀▀▀▀ █▪▀▀▀▀▀•  ▀▀▀ .▀  ▀
+    """
 
-company = cbs.get_top_company('twilio.com')
-people = cbs.get_people(company, clearbit.Role.RECRUITING)
-people += cbs.get_people(company, clearbit.Role.ENGINEERING)
+    # 83ee5038418c5ed535ff0e5e5f7704b8e9561f9f86dd8563391aa220d341c0f1
 
-# points system
-for person in people:
-    person["quality_score"] = 1000
-
-    # technical evangelists or advocates
-    if fuzzy_in(person['title'], ['evangelist', 'advocate']):
-        person["quality_score"] += 500
-
-    # campus or university recruiters
-    if fuzzy_in(person['title'], ['campus', 'university']):
-        person["quality_score"] += 100
-
-    # recruiters
-    if fuzzy_in(person['title'], ['recruiter', 'recruiting', 'talent', 'sourcing', 'sourcer']):
-        person["quality_score"] += 50
-
-    # points for being technical
-    if fuzzy_in(person['title'], ['technical']):
-        person["quality_score"] += 20
-
-    # subtract points for being global or international
-    if fuzzy_in(person['title'], ['global', 'international', 'worldwide']):
-        person["quality_score"] -= 10
-
-    # subtract points for diversity and inclusion
-    if fuzzy_in(person['title'], ['diversity', 'inclusion', "de&i", "dei", "d&i"]):
-        person["quality_score"] -= 20
-
-    # subtract points for very high level titles
-    if fuzzy_in(person['title'], ['senior', 'vp', 'director', 'head', 'lead', 'executive', 'chief', 'principal']):
-        person["quality_score"] -= 10
-
-    # subtract points for very lower, but still senior titles
-    if fuzzy_in(person['title'], ['manager', 'associate', 'assistant', 'coordinator', 'specialist']):
-        person["quality_score"] -= 5
-
-
-people.sort(key=lambda x: x['quality_score'], reverse=True)
-
-if len(people) > 1:
-    print("Top result email: ", end="")
-    print(cbs.get_person_info(people[0]['id'])['email'])
+    cprint(TITLE, "blue")
     print()
 
-# print out the top 10
-# create a df
-df = pd.DataFrame(people)
-df = df[["name", "title", "quality_score"]]
-print(df.head(5).to_markdown())
+    if os.path.exists("session_id.txt"):
+        with open("session_id.txt", "r") as f:
+            session_id = f.read()
+    else:
+        session_id = input("Session ID: ")
+        with open("session_id.txt", "w") as f:
+            f.write(session_id)
 
-print()
-print("Company Details")
-print("---------------")
-print(f"Name: {company.name}")
-print(f"Domain: {company.domain}")
-print(f"Employees: {company.size}")
-print(f"Type: {'Big Tech' if company.size > 10000 else 'Tech'}")
+    company_chosen = input("Search company: ")
 
-# Asana	Tech	Casey	Goodman	caseygoodman@asana.com		Not Contacted Yet		Recruiting
-# Twilio  Tech    Lizzie Siegle   lsiegle@twilio.com              Not Contacted Yet               Developer Evangelist Lll
-clipboard.copy(
-    f"{company.name}\t"
-    f"Tech\t{people[0]['first_name']}\t{people[0]['last_name']}\t"
-    f"{cbs.get_person_info(people[0]['id'])['email']}\t\t"
-    f"Not Contacted Yet\t\t{people[0]['title']}"
-)
+    while company_chosen != "":
 
-print("Success! Copied to clipboard.")
+        sf = sponsor_finder.SponsorFinder(
+            session_id=session_id,
+            company=company_chosen
+        )
+
+        print("\n------------------[ INFORMATION ]--------------------\n")
+
+        sf.run()
+
+        company = sf.companies_info[company_chosen]
+
+        print(f"Name: {company.name}")
+        print(f"Domain: {company.domain}")
+        print(f"Employees: {company.size}")
+        print(f"Type: {'Big Tech' if company.size > 10000 else 'Tech'}")
+
+        print("\n-----------------[ TOP CANDIDATES ]------------------\n")
+
+        sf.print_top_five(company_chosen)
+
+        sf.get_email_for_top_person(company_chosen)
+        sf.copy_spreadsheet_row(company_chosen)
+
+        print()
+        cprint("Row copied to clipboard!", "green")
+
+        company_chosen = input("\nSearch company (empty to exit): ")
 
 
-# campus_recruiters = []
-# campus_di_recruiters = []
-# senior_recruiters = []
-# other_recruiters = []
-# other_di_recruiters = []
-
-# for person in people:
-#     if fuzzy_in(person['title'], ['campus', 'university']):
-#         if fuzzy_in(person['title'], ['diversity', 'inclusion', "de&i", "dei", "d&i"]):
-#             campus_di_recruiters.append(person)
-#         else:
-#             campus_recruiters.append(person)
-
-#     elif fuzzy_in(person['title'],
-#                   ['senior', 'vp', 'manager', 'director', 'head', 'lead', 'executive', 'chief', 'principal']):
-#         senior_recruiters.append(person)
-#     else:
-#         if fuzzy_in(person['title'], ['diversity', 'inclusion', "de&i", "dei", "d&i"]):
-#             other_di_recruiters.append(person)
-#         else:
-#             other_recruiters.append(person)
-
-# campus_recruiters.sort(key=lambda x: x['title'])
-# campus_di_recruiters.sort(key=lambda x: x['title'])
-# senior_recruiters.sort(key=lambda x: x['title'])
-# other_recruiters.sort(key=lambda x: x['title'])
-# other_di_recruiters.sort(key=lambda x: x['title'])
-
-# print("\nCAMPUS RECRUITERS")
-# print("\n".join(map(lambda x: x["title"], campus_recruiters)))
-
-# print("\nCAMPUS D&I RECRUITERS")
-# print("\n".join(map(lambda x: x["title"], campus_di_recruiters)))
-
-# print("\nOTHER RECRUITERS")
-# print("\n".join(map(lambda x: x["title"], other_recruiters)))
-
-# print("\nSENIOR RECRUITERS")
-# print("\n".join(map(lambda x: x["title"], senior_recruiters)))
-
-# print("\nOTHER D&I RECRUITERS")
-# print("\n".join(map(lambda x: x["title"], other_di_recruiters)))
+if __name__ == "__main__":
+    try:
+        main()
+    except (RuntimeError, sponsor_finder.SponsorFinderException) as e:
+        cprint(f"Error: {e}", "red")

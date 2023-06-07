@@ -36,7 +36,11 @@ class ClearBitSession:
         }
 
         res = requests.get(url, params=params, headers=headers)
-        res.raise_for_status()
+        try:
+            res.raise_for_status()
+        except requests.exceptions.HTTPError:
+            raise RuntimeError(f'No company found for domain: {domain}')
+
         return res.json()
 
     def get_top_company(self, query: str):

@@ -118,7 +118,6 @@ def turboMode():
             if len(peoples) > 0:
                 sf.get_email_for_top_person(company)
     except requests.exceptions.HTTPError as e:
-        # CHeck if 402
         if e.response.status_code == 402:
             cprint("\nYou have ran out of tokens!", "red")
             cprint("Because results are cached based on authkey, a copy of the results have been copied to your clipboard.", "blue")
@@ -127,6 +126,8 @@ def turboMode():
             input("\nPress [Enter] to continue... ")
     finally:
         sf.copy_spreadsheet_rows(sf.companies_people.keys())
+        cprint("A copy of the results have been copied to your clipboard.", "blue")
+        input("\nPress [Enter] to continue... ")
 
 
 def main_menu():

@@ -3,4 +3,5 @@ __pycache__
 session_id.txt
 .DS_Store
 *.sqlite
-__*.txt
+existing.txt
+new.txt

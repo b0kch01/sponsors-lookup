@@ -124,10 +124,11 @@ def turboMode():
             cprint("Make sure you transfer the results to a spreadsheet before continuing.", "blue")
 
             input("\nPress [Enter] to continue... ")
-    finally:
-        sf.copy_spreadsheet_rows(sf.companies_people.keys())
-        cprint("A copy of the results have been copied to your clipboard.", "blue")
-        input("\nPress [Enter] to continue... ")
+            return
+
+    sf.copy_spreadsheet_rows(sf.companies_people.keys())
+    cprint("A copy of the results have been copied to your clipboard.", "blue")
+    input("\nPress [Enter] to continue... ")
 
 
 def main_menu():

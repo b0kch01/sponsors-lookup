@@ -50,7 +50,7 @@ class SponsorFinder:
             score -= 20
 
         # subtract points for very high level titles
-        if self.fuzzy_in(person['title'], ['senior', 'vp', 'director', 'head', 'lead', 'executive', 'chief', 'principal']):
+        if self.fuzzy_in(person['title'], ['senior', 'vp', 'director', 'head', 'lead', 'executive', 'chief', 'principal', "staff"]):
             score -= 10
 
         # subtract points for very lower, but still senior titles

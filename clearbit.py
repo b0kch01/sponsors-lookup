@@ -1,7 +1,11 @@
 from dataclasses import dataclass
 
 from path import Path
+
 import requests
+import requests_cache
+
+requests_cache.install_cache('clearbit_cache')
 
 
 _API_BASE = Path('https://connect.clearbit.com/v1')

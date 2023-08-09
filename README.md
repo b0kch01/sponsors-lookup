@@ -42,12 +42,36 @@ me looking for campus recruiters
 |  3 | Monty Gill          | Senior Talent Partner, R&D Technical Leadership |            1060 |
 |  4 | Anthony Spangenberg | Staff Data Analyst, Talent Acquisition          |            1050 |
 
+# Instructions
+
+## Setup
+1. Clone this repo
+2. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+3. Run the script (make sure you have python3)
+```bash
+python3 main.py
+``` 
+or
+```bash
+python main.py
+```
+
+## Turbo Mode Setup
+1. Create a file called `existing.txt` in the `input/` directory
+2. Add the emails of the companies you already contacted/found in the file
+3. Create a file called `new.txt` in the `input/` directory
+4. Add the emails of the companies you want to analyze in the file
+ - The script will automatically remove duplicates
+
 
 ## Progress
 
-- [ ] Store results and allow for easy copy-n-paste
+- [X] Store results and allow for easy copy-n-paste
   - [X] Single row copy
-  - [ ] Multi row copy with input_file
+  - [X] Multi row copy with input_file
 - [X] Reverse engineer email lookup feature
   - [X] Implement into API
 - [x] Employee selection algorithm

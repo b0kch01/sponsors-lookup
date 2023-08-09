@@ -1,6 +1,7 @@
 import clearbit
 import clipboard
 import pandas as pd
+from alive_progress import alive_it
 
 
 class SponsorFinderException(Exception):
@@ -59,8 +60,22 @@ class SponsorFinder:
         return score
 
     def run(self):
-        for company in list(self.companies_people.keys()):
+        for company in alive_it(self.companies_people.keys(), title="⏺ Fetching company info"):
             self.fetch_company_and_people_info(company)
+
+    def purge_empty_companies(self):
+
+        keys = list(self.companies_people.keys())
+        purged = []
+
+        for company in keys:
+            if len(self.companies_people[company]) == 0:
+                del self.companies_people[company]
+                del self.companies_info[company]
+
+                purged.append(company)
+
+        return purged
 
     def fetch_company_and_people_info(self, company_name):
         cbs = clearbit.ClearBitSession(session_id=self.session_id)
@@ -85,20 +100,39 @@ class SponsorFinder:
         self.companies_people[company][0]['email'] = cbs.get_person_info(
             self.companies_people[company][0]["id"])['email']
 
+    def get_spreadsheet_row(self, company_name: str):
+        company = self.companies_info[company_name]
+        top_person = self.companies_people[company_name][0]
+
+        return (
+            f"{company.name}\t"
+            f"Tech\t{top_person['first_name']}\t{top_person['last_name']}\t"
+            f"{top_person['email']}\t\t"
+            f"Not Contacted Yet\t\t{top_person['title']}")
+
     def copy_spreadsheet_row(self, company_name: str):
         if (company_name not in self.companies_people or
                 len(self.companies_people[company_name]) == 0):
             raise SponsorFinderException("No company or no people found for company")
 
-        company = self.companies_info[company_name]
-        top_person = self.companies_people[company_name][0]
+        clipboard.copy(self.get_spreadsheet_row(company_name))
 
-        clipboard.copy(
-            f"{company.name}\t"
-            f"Tech\t{top_person['first_name']}\t{top_person['last_name']}\t"
-            f"{top_person['email']}\t\t"
-            f"Not Contacted Yet\t\t{top_person['title']}"
-        )
+    def copy_spreadsheet_rows(self, company_names: list[str]):
+        rows = []
+
+        for company in company_names:
+            if company not in self.companies_people:
+                continue
+
+            if len(self.companies_people[company]) == 0:
+                continue
+
+            if "email" not in self.companies_people[company][0]:
+                continue
+
+            rows.append(self.get_spreadsheet_row(company))
+
+        clipboard.copy("\n".join(rows))
 
     def print_top_five(self, company_name: str):
         if (company_name not in self.companies_people or

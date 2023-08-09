@@ -2,3 +2,5 @@ __pycache__
 *.csv
 session_id.txt
 .DS_Store
+*.sqlite
+__*.txt

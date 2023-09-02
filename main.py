@@ -20,8 +20,7 @@ def printTitle():
     """
 
     cprint(TITLE, "blue")
-    print()
-    cprint("Created by: @b0kch01 for Hack@UCI", "yellow")
+    cprint(" Created by: @b0kch01 for Hack@UCI ", "yellow", on_color="on_grey")
     print()
 
 
@@ -44,7 +43,7 @@ def main():
 
     session_id = getSessionID()
 
-    company_chosen = input("Search company: ")
+    company_chosen = input("Search company by name (blank to go back): ")
 
     while company_chosen != "":
 
@@ -77,18 +76,23 @@ def main():
         company_chosen = input("\nSearch company (empty to exit): ")
 
 
+def simplify(raw_text):
+    return "".join([c for c in raw_text.lower() if c.isalnum()])
+
+
 def turboMode():
     clear()
     printTitle()
 
-    def simplify(raw_text):
-        return "".join([c for c in raw_text.lower() if c.isalnum()])
+    try:
+        with open("input/existing.txt", "r") as f:
+            checked_companies = map(simplify, f.read().splitlines())
 
-    with open("input/existing.txt", "r") as f:
-        checked_companies = map(simplify, f.read().splitlines())
-
-    with open("input/new.txt", "r") as f:
-        new_companies = map(simplify, f.read().splitlines())
+        with open("input/new.txt", "r") as f:
+            new_companies = map(simplify, f.read().splitlines())
+    except FileNotFoundError:
+        helpMode()
+        return
 
     # Get the non-intersection of the two lists
     new_companies = sorted(list(set(new_companies) - set(checked_companies)))
@@ -131,6 +135,36 @@ def turboMode():
     input("\nPress [Enter] to continue... ")
 
 
+def helpMode():
+    clear()
+
+    cprint("Turbomode Checklist:\n", "blue")
+    cprint(" 1. Place existing companies in input/existing.txt")
+
+    try:
+        with open("input/existing.txt", "r") as file:
+            existing_count = len(file.readlines())
+
+        cprint(f"    [✓] Found {existing_count} existing companies", "green")
+    except FileNotFoundError:
+        cprint(f"    [!] File not found in directory.", "yellow")
+
+    cprint(" 2. Place new companies in input/new.txt")
+
+    try:
+        with open("input/new.txt", "r") as file:
+            existing_count = len(file.readlines())
+
+        cprint(f"    [✓] Found {existing_count} new companies", "green")
+    except FileNotFoundError:
+        cprint(f"    [!] File not found in directory.", "yellow")
+
+    cprint(" 3. Select turbo mode in the main menu")
+    cprint(" 4. Results will copied into the clipboard (paste into sponsorship tracker sheet)")
+
+    input("\nPress [Enter] to return to the main menu.")
+
+
 def main_menu():
     while True:
         clear()
@@ -138,9 +172,9 @@ def main_menu():
 
         print("1. Single Mode")
         print("2. Automatic Mode")
-        print("3. Exit")
+        print("3. Exit\n")
 
-        while (choice := input("\nChoice: ")) not in ["1", "2", "3"]:
+        while (choice := input("Enter option (? for help): ")) not in ["1", "2", "3", "?"]:
             clear()
             printTitle()
 
@@ -148,12 +182,15 @@ def main_menu():
             print("2. Automatic Mode")
             print("3. Exit")
 
-            cprint("Invalid choice!", "yellow")
+            cprint("\nInvalid, try again!", "red")
 
         if choice == "1":
             main()
         elif choice == "2":
             turboMode()
+        elif choice == "?":
+            helpMode()
+
         else:
             break
 

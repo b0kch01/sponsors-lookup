@@ -18,8 +18,10 @@ class SponsorFinder:
         return False
 
     def __init__(self, *, company=None, companies=None, session_id):
-        self.companies_people = {k: [] for k in (companies or [company])}
-        self.companies_info = {k: [] for k in (companies or [company])}
+        self.companies_queue = list(set(companies)) or [company]
+
+        self.companies_people = {}
+        self.companies_info = {}
         self.session_id = session_id
 
     def calculate_points(self, person):
@@ -49,6 +51,10 @@ class SponsorFinder:
         if self.fuzzy_in(person['title'], ['diversity', 'inclusion', "de&i", "dei", "d&i"]):
             score -= 20
 
+        # subtract a lot more points for very very high titles
+        if self.fuzzy_in(person["title"], ["cto", "ceo", "founder", "president", "chairman", "co-founder"]):
+            score -= 30
+
         # subtract points for very high level titles
         if self.fuzzy_in(person['title'], ['senior', 'vp', 'director', 'head', 'lead', 'executive', 'chief', 'principal', "staff"]):
             score -= 10
@@ -60,8 +66,11 @@ class SponsorFinder:
         return score
 
     def run(self):
-        for company in alive_it(self.companies_people.keys(), title="⏺ Fetching company info"):
-            self.fetch_company_and_people_info(company)
+        for company in alive_it(self.companies_queue, title="⏺ Fetching company info"):
+            try:
+                self.fetch_company_and_people_info(company)
+            except AssertionError:
+                print(f"⏺ No company found for {company}")
 
     def purge_empty_companies(self):
 
@@ -81,6 +90,10 @@ class SponsorFinder:
         cbs = clearbit.ClearBitSession(session_id=self.session_id)
 
         company = cbs.get_top_company(company_name)
+
+        if company.name in self.companies_info or company.name in self.companies_people:
+            return
+
         people = cbs.get_people(company, clearbit.Role.RECRUITING)
         people += cbs.get_people(company, clearbit.Role.ENGINEERING)
 
@@ -89,8 +102,8 @@ class SponsorFinder:
 
         people.sort(key=lambda x: x['quality_score'], reverse=True)
 
-        self.companies_info[company_name] = company
-        self.companies_people[company_name] = people
+        self.companies_info[company.name] = company
+        self.companies_people[company.name] = people
 
     def get_email_for_top_person(self, company):
         if company not in self.companies_people or len(self.companies_people[company]) == 0:
@@ -133,6 +146,7 @@ class SponsorFinder:
             rows.append(self.get_spreadsheet_row(company))
 
         clipboard.copy("\n".join(rows))
+        print(f"Copied {len(rows)} rows to clipboard")
 
     def print_top_five(self, company_name: str):
         if (company_name not in self.companies_people or

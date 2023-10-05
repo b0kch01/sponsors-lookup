@@ -112,7 +112,11 @@ def turboMode():
         companies=new_companies
     )
 
-    sf.run()
+    try:
+        sf.run()
+    except KeyboardInterrupt:
+        cprint("\nExited early.", "yellow")
+        pass
 
     purged = sf.purge_empty_companies()
     cprint(f"⏺ Purged {len(purged)} companies with no people", "yellow")
@@ -123,6 +127,7 @@ def turboMode():
                 sf.get_email_for_top_person(company)
     except requests.exceptions.HTTPError as e:
         if e.response.status_code == 402:
+            sf.copy_spreadsheet_rows(sf.companies_people.keys())
             cprint("\nYou have ran out of tokens!", "red")
             cprint("Because results are cached based on authkey, a copy of the results have been copied to your clipboard.", "blue")
             cprint("Make sure you transfer the results to a spreadsheet before continuing.", "blue")

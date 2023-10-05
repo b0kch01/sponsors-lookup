@@ -1,9 +1,9 @@
 __pycache__
 *.csv
 session_id.txt
+session_ids.txt
 .DS_Store
 *.sqlite
-existing.txt
-new.txt
+*.txt
 __*.py
 all_companies.json

@@ -98,7 +98,7 @@ Audible
 Everlaw
 Allbirds
 Verbwire
-Datadog
+sweetgreen
 NVIDIA
 AMD
 Intel
@@ -176,7 +176,6 @@ Product Hunt
 HackerOne
 Trulia
 DesignByHumans
-sweetgreen
 Cognizant
 IBM
 Splunk
@@ -255,6 +254,34 @@ MosiacML
 Proviti
 Marotta
 CertiK
+Freddie Mac
+Oshkosh Corporation
+Bayer
+HashiCorp
+Wells Fargo
+Charles Schwab
+Datadog
+Hudl
+Vectra AI
+Okta
+Athelas
+Hightouch
+Allegion
+Humana
+World Wide Technology
+Oklahoma City Thunder
+Rivian
+ByteDance
+Verkada
+General Motors
+DISCO
+Arrowstreet Capital
+RippleMatch
+Handshake
+Pure Storage
+Bridgewater Associates
+84.51 Degrees
+Rackner
 Codazen
 Veeva Systems
 Esri
@@ -359,11 +386,38 @@ JetBrains
 GenSpark
 Medallia
 Envision Accelerator
+Codecademy
 Deliotte
 Ingram Micro
 Starship
 Spigen
-Codecademy
+RapidScale
+SurePrep
+Anduril
+Better.com
+Neudesic
+Lantronix
+Merlyn Mind
+Codazen
+divvyDOSE
+DynTek
+HireRight
+CalAmp
+Western Digital
+Skyworks Solutions
+Workday
+ePlus
+TadHealth
+Onica
+Arcules
+Insight Enterprises
+Rackspace
+Connected Signals
+BreezeML
+AXON Networks
+Kibsi
+Mobix Labs
+https://www.employbl.com/company-locations/irvine
 Vincit
 Razer
 Jobot
@@ -441,18 +495,24 @@ Tepia Co
 Dataiku
 Codazen
 Altryx
-k
-Patreon
-Workday
-VeriSign
-Cloudfare
-MonogoDB
-Unity3D
-Smartsheet
-Box
-Asana
-Asana
-Intel
+Anchorage
+Masimo
+Smith Micro Technologies
+The Gizmo App Company
+Postcard Game Studio
+Trumpia
+Pegasystems
+Gravity Sketch
+Weedmaps
+Micro Semi
+Beacon Pointe
+Tae Technologies
+Web Purify
+Alphaeon
+Spigen
+Cyvatar
+AXON Networks
+Kibsi
 1Password
 6sense
 AirGarage
@@ -462,12 +522,14 @@ Apollo.io
 Applied Intuition
 Arcadia University
 Arctic Wolf
+Asana
 AssemblyAI
 Aurora Solar
 Benchling
 BeReal.
 BetterUp
 Boom Supersonic
+Box
 Calendly
 Cameo
 Carta
@@ -475,6 +537,7 @@ Chainalysis
 Chargebee
 ClassDojo
 ClickUp
+Cloudfare
 Coda
 CoinTracker
 Common Room
@@ -515,6 +578,7 @@ Illumio
 Imperfect Foods
 Impossible Foods
 Instawork
+Intel
 Intercom
 Ironclad
 Jasper
@@ -537,6 +601,7 @@ MessageBird
 Mews
 Miro
 Modern Treasury
+MonogoDB
 Monzo
 MoonPay
 Motive
@@ -552,18 +617,327 @@ OpenStore
 Outschool
 Pachama
 Panther Labs
+Papaya Global
+Patch
+Patreon
+Pave
+Pendo.io
+People.ai
+Persefoni
+Personal Capital
+Pinecone
+Plastiq
+Postscript
+Primerica
+Productboard
+Public Storage
+Ramp
+Relativity Space
+Replit
+Resourcely
+Ribbon Health
+Rippling
+Runway
+Sardine
+SeatGeek
+ServiceTitan
+Shopmonkey
+Skydio
+Slice
+Smartsheet
+Snackpass
+Snorkel AI
+Solugen
+Solv
+Sorare
+Sourcegraph
+SQUIRE
+Statsig
+Strava
+Substack
+Superhuman
+Tecton
+The Boring Company
+Uniswap
+United States Postal Service
+Unity3D
+Vareto
+Vendr
+VeriSign
+Wealthfront
+Webflow
+WHOOP
+Wizards of the Coast
+Workday
+WorkOS
+Workrise
+Workstream
+Zapier
+Zepto
+ZipRecruiter
+Zocdoc
+10x Genomics
+1upHealth
+23andMe
+Kohl's
+3Box Labs
+Aave
+Abarca Health
+AbelsonTaylor
+Ableton
+Abnormal Security
+Abridge
+accesso Technology Group
+Access Softek
+acelerate
+Achieve3000
+ActionIQ
+Workday Adaptive Planning
+Addepar
+Addicting Games
+Adyen
+Aera Technology
+AeroVironment
+Aetion
+Affinitiv
+Affinity
+Affirm
+Afresh
+AgentSync
+Age of Learning
+Agero
+Agtonomy
+aifleet
+Airbnb
+Airbyte
+Aircall
+Alation
+Alcon
+Alkymi
+Alloy
+Alluxio
+Aloft
+Altana Technologies
+Ambient.ai
+Amobee
+Amperity
+Ampla
+Anaplan
+Andela
+Angi
+Ansira
+Anyscale
+AON3D
+Apixio
+Apollo
+Appcues
+Appian
+Applied Materials
+ApplyBoard
+Internet Archive
+Arc Technologies
+Argo AI
+Aritzia
+Armorblox
+Arrive Logistics
+ArsenalBio
+Arta Finance
+ASAPP
+Ascend.io
+Assembled
+Assurance IQ
+AssuredPartners
+Astra
+Astranis Space Technologies
+At-Bay
+A Thinking Ape
+Atlanta Journal-Constitution
+AtoB
+Atomwise
+AttackIQ
+Attentive
+Audi USA
+Augmedix
+Auterion
+Avala AI
+Ava Labs
+AvantStay
+Aviatrix
+Away
+Axiom Zen
+Axonify
+Booking.com
+Babylon Health
+Badger Meter
+Bandwidth
+BarkBox
+Barry's
+Baseten
+Beacon Platform
+BeamNG
+Beamery
+BenchSci
+Benefitfocus
+Benepass
+Berkeley Lights
+BerlinRosen
+Bestow
+BetterCloud
+Bettermode
+Betterworks
+Beyond Identity
+Big Health
+Bill.com
+BillionToOne
+Bilt Rewards
+Binance.US
+Binti
+Biobot Analytics
+Bitcoin Depot
+The Bitfury Group
+BitGo
+Bitquery
+Bitwarden
+Bixal
+Black Crow AI
+Blameless
+Blink UX
+Blizzard Entertainment
+Blockchain.com
+BlockFi
+Blue Bottle Coffee
+Blue Origin
+Blue River Tech
+Bluevine
+bodo.ai
+Bolt
+Bond Vet
+Bose
+Bounteous
+Boxed
+Breeze Airways
+BrightEdge
+Brightflow AI
+Bright Health
+Bright Line Eating
+Brightseed
+brightwheel
+Brixmor Property Group
+Broadway Technology
+Brooklinen
+Brooks Running
+Bubble
+Buffer
+Bugcrowd
+Built In
+Built Robotics
+Businessolver
+Business Wire
+Butterfly Network
+BuzzFeed
+Caffeine
+Caixa Econômica Federal
+Calibrate
+CalMatters
+Cambly
+Canary Technologies
+Candid Health
+Candy Digital
+Caption Health
+Carbonite
+Carbon Direct
+Cardiologs
+Cardlytics
+Careem
+Carta Healthcare
+Cast & Crew
+Castiron
+CB Insights
+Cedars-Sinai
+Centivo
+99 Cents Only Stores
+Cerebral
+Chapterly
+CharacterStrong
+ChargePoint
+ChartHop
+Checkout.com
+Checkr
+Cherre
+Chronicled
+Chronosphere
+Circle: The all-in-one community platform for creators and brands
+CircleCI
+Cirrus Logic
+Cityblock Health
+Clarivate
+ClassPass
+Clearbit
+Clear
+Cleerly
+Clerk & Comptroller, Palm Beach County
+Clever
+Clio
+Close
+Cloudflare
+CloudTrucks
+Clubhouse
+Clutter
+Codecademy
+CoderPad
+Coherus BioSciences
+Cohesity
+CoinDesk
+CoinList
+Coin Metrics
+Collective Health
+Colorado.gov
+Column Five
+commercetools
+Commonwealth Fusion Systems
+Commsor
+Contentsquare
+Convoy
+Copper Banking
+Core Digital Media
+Corelight
+Cortex
+Couchbase
+Coupa Software
+Course Hero
+Coursera
+Covariant
+Cover Genius
+Cprime
+Crayon
+CreativeX
+Credit Karma
+Credible
+Cribl
+Critical Mass
+Crocs
+Crossbeam
+Crossing Minds
+Crunchbase
+Crusoe
+Crypto.com
+CubeSmart
+Curaleaf
+Curative
 thatgamecompany
 Taco Bell
 GoPro
-CoStar
+CoStar Group
 Mobilityware
 WayUp
 Cockroach Labs
 Twilio
 JPL
 Zeplin
-Ebay
 jenni.ai
+PIMCO
+Pacific Life
+UCI ODIT
 Dolby Laboratories
 Amplication
 New Relic
@@ -666,6 +1040,23 @@ Brex
 Vanta
 Retool
 Onfleet
+Rapid Robotics
+Zumper
+Tonkean
+ZS
+Braze
+Poshmark 
+Amplitude 
+Fivetran
+Alloy Automation
+Sumo Logic
+Okta
+Spin
+Segment 
+Agilent Technologies
+Fitbit
+Digital Realty
+Nutanix
 Kofax
 CrowdStrike
 Alteryx

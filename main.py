@@ -56,7 +56,7 @@ def main():
 
         sf.run()
 
-        company = sf.companies_info[company_chosen]
+        company = sf.companies_info[list(sf.companies_info.keys())[0]]
 
         print(f"Name: {company.name}")
         print(f"Domain: {company.domain}")
@@ -65,10 +65,10 @@ def main():
 
         print("\n-----------------[ TOP CANDIDATES ]------------------\n")
 
-        sf.print_top_five(company_chosen)
+        sf.print_top_five(company.name)
 
-        sf.get_email_for_top_person(company_chosen)
-        sf.copy_spreadsheet_row(company_chosen)
+        sf.get_email_for_top_person(company.name)
+        sf.copy_spreadsheet_row(company.name)
 
         print()
         cprint("Row copied to clipboard!", "green")
@@ -120,7 +120,6 @@ def turboMode():
 
     purged = sf.purge_empty_companies(lambda x: simplify(x) in checked_companies)
 
-    print(checked_companies, sf.companies_info.keys())
     cprint(f"⏺ Purged {len(purged)} companies with no people", "yellow")
 
     try:

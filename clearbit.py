@@ -28,7 +28,7 @@ class Company:
 
 class ClearBitSession:
     def __init__(self, session_id: str):
-        self.session_id = session_id
+        self.session_id = session_id.strip()
 
     def get_company_details(self, domain: str):
         # Example: https://connect.clearbit.com/v1/companies/find?domain=kohls.com

@@ -56,7 +56,7 @@ def main():
 
         sf.run()
 
-        company = sf.companies_info[company_chosen]
+        company = sf.companies_info[list(sf.companies_info.keys())[0]]
 
         print(f"Name: {company.name}")
         print(f"Domain: {company.domain}")
@@ -65,10 +65,10 @@ def main():
 
         print("\n-----------------[ TOP CANDIDATES ]------------------\n")
 
-        sf.print_top_five(company_chosen)
+        sf.print_top_five(company.name)
 
-        sf.get_email_for_top_person(company_chosen)
-        sf.copy_spreadsheet_row(company_chosen)
+        sf.get_email_for_top_person(company.name)
+        sf.copy_spreadsheet_row(company.name)
 
         print()
         cprint("Row copied to clipboard!", "green")
@@ -86,16 +86,16 @@ def turboMode():
 
     try:
         with open("input/existing.txt", "r") as f:
-            checked_companies = map(simplify, f.read().splitlines())
+            checked_companies = set(map(simplify, f.read().splitlines()))
 
         with open("input/new.txt", "r") as f:
-            new_companies = map(simplify, f.read().splitlines())
+            new_companies = set(map(simplify, f.read().splitlines()))
     except FileNotFoundError:
         helpMode()
         return
 
     # Get the non-intersection of the two lists
-    new_companies = sorted(list(set(new_companies) - set(checked_companies)))
+    new_companies = sorted(list(new_companies - checked_companies))
 
     if "y" != input(f"Found {len(new_companies)} new companies. Continue? [Y/n] ").lower():
         return
@@ -118,7 +118,8 @@ def turboMode():
         cprint("\nExited early.", "yellow")
         pass
 
-    purged = sf.purge_empty_companies()
+    purged = sf.purge_empty_companies(lambda x: simplify(x) in checked_companies)
+
     cprint(f"⏺ Purged {len(purged)} companies with no people", "yellow")
 
     try:
@@ -134,6 +135,8 @@ def turboMode():
 
             input("\nPress [Enter] to continue... ")
             return
+        else:
+            raise e
 
     sf.copy_spreadsheet_rows(sf.companies_people.keys())
     cprint("A copy of the results have been copied to your clipboard.", "blue")
@@ -158,7 +161,11 @@ def helpMode():
 
     try:
         with open("input/new.txt", "r") as file:
-            existing_count = len(file.readlines())
+            with open("input/existing.txt", "r") as existing_file:
+                # use set and simplify map
+                existing = set(map(simplify, existing_file.readlines()))
+                new = set(map(simplify, file.readlines()))
+                existing_count = len(new - existing)
 
         cprint(f"    [✓] Found {existing_count} new companies", "green")
     except FileNotFoundError:

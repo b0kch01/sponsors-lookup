@@ -1,6 +1,7 @@
 import clearbit
 import clipboard
 import pandas as pd
+import requests
 from alive_progress import alive_it
 
 
@@ -12,13 +13,16 @@ class SponsorFinder:
 
     @staticmethod
     def fuzzy_in(haystack, needles):
+        if haystack is None:
+            return False
+
         for needle in needles:
             if needle.lower() in haystack.lower():
                 return True
         return False
 
     def __init__(self, *, company=None, companies=None, session_id):
-        self.companies_queue = list(set(companies)) or [company]
+        self.companies_queue = list(set(companies)) if companies is not None else [company]
 
         self.companies_people = {}
         self.companies_info = {}
@@ -72,13 +76,13 @@ class SponsorFinder:
             except AssertionError:
                 print(f"⏺ No company found for {company}")
 
-    def purge_empty_companies(self):
+    def purge_empty_companies(self, existing: callable):
 
         keys = list(self.companies_people.keys())
         purged = []
 
         for company in keys:
-            if len(self.companies_people[company]) == 0:
+            if len(self.companies_people[company]) == 0 or existing(company):
                 del self.companies_people[company]
                 del self.companies_info[company]
 
@@ -110,8 +114,12 @@ class SponsorFinder:
             raise SponsorFinderException("No company or no people found for company")
 
         cbs = clearbit.ClearBitSession(session_id=self.session_id)
-        self.companies_people[company][0]['email'] = cbs.get_person_info(
-            self.companies_people[company][0]["id"])['email']
+
+        try:
+            self.companies_people[company][0]['email'] = cbs.get_person_info(
+                self.companies_people[company][0]["id"])['email']
+        except requests.exceptions.HTTPError:
+            pass
 
     def get_spreadsheet_row(self, company_name: str):
         company = self.companies_info[company_name]
